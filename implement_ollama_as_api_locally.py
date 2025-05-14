@@ -23,3 +23,13 @@ Payload = {
 response = requests.post(OLLAMA_API, json=Payload, headers=HEADERS)
 
 print(response.json()['message']['content'])
+
+
+##### we can also use ollama module #####
+
+# import ollama
+
+# response = ollama.chat(model=MODEL, messages=messages)
+
+# print(f'response from ollam: {response['message']['content']}')
+
