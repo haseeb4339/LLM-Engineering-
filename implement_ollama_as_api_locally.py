@@ -9,16 +9,16 @@ HEADERS = {'Content-Type': 'application/json'}
 MODEL = "llama3.2"
 
 
-messages = [
-    {'role':'user', 'content':'Describe some of the business application of Generative AI'}
+# messages = [
+#     {'role':'user', 'content':'Describe some of the business application of Generative AI'}
 
-]
+# ]
 
-Payload = {
-    "model":MODEL,
-    "messages":messages,
-    "stream":False
-}
+# Payload = {
+#     "model":MODEL,
+#     "messages":messages,
+#     "stream":False
+# }
 
 # response = requests.post(OLLAMA_API, json=Payload, headers=HEADERS)
 
@@ -51,7 +51,7 @@ def web_scraper(url):
     return title, text
 
 
-web=web_scraper("https://edwarddonner.com")
+
 
 
 # print(web[1])
@@ -68,21 +68,55 @@ system_prompt = "You are an assistant that analyzes the contents of a website\
 
 
 
+
+#### here title will be web[0], and text will be web[1]
 def user_prompt_for(web):
-    user_prompt = f"\nYou are looking at a website titled {web.title}"
+    user_prompt = f"\nYou are looking at a website titled {web[0]}"
     user_prompt += "The contents of this website is as follows:\
         please provide a short summary of this website in markdown.\
         If it include news or announcements, then summarize these too.\n\n"
     
-    user_prompt +=web.text
+    user_prompt +=web[1]
     
     return user_prompt
 
 
-##### i will pass web[1]
+##### i will pass tuple
 def messages_for(web):
 
     return [
         {'role':'system', 'content':system_prompt},
         {'role':'user', 'content':user_prompt_for(web)}
     ]
+
+
+
+
+
+
+def summerizer(url):
+    website = web_scraper(url)
+
+
+    Payload = {
+        "model":MODEL,
+        "messages":messages_for(website),
+        "stream":False
+    }
+
+    response = requests.post(OLLAMA_API, json=Payload, headers=HEADERS)
+
+    return response.json()['message']['content']
+
+
+
+def main():
+
+   summery =  summerizer("https://edwarddonner.com")
+
+   print(f'sumerry of the website using llama3.2: {summery}')
+
+
+
+main()
+    
