@@ -1,0 +1,26 @@
+# Website Summarizer using LLaMA 3.2 and Web Scraping
+
+This Python script fetches and summarizes the content of a webpage using a locally hosted [Ollama](https://ollama.com) API running a LLaMA 3.2 language model. It uses `requests` and `BeautifulSoup` to scrape the page and then formulates a prompt to summarize its content in markdown format.
+
+## Features
+
+- **Web scraping** using `requests` and `BeautifulSoup`.
+- **Content summarization** using the LLaMA 3.2 model served via Ollama API.
+- Filters out non-relevant HTML elements like scripts, styles, and images.
+- Returns a short, readable summary in markdown.
+- Designed to ignore navigation menus and other non-essential content.
+
+## Prerequisites
+
+- Python 3.6+
+- Ollama server running locally (`http://localhost:11434`)
+- LLaMA 3.2 model downloaded and available on Ollama
+- Python packages:
+  - `requests`
+  - `beautifulsoup4`
+  - `IPython` (for optional Markdown display)
+
+Install the required packages using pip:
+
+```bash
+pip install requests beautifulsoup4 ipython
